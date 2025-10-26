@@ -1,0 +1,13 @@
+www.kentknowsme.com/
+│
+├─ index.html                # main page
+├─ assets/
+│   ├─ css/
+│   │   └─ style.css         # all styling
+│   ├─ js/
+│   │   └─ script.js         # interactivity (scroll, modals, form)
+│   └─ img/
+│       ├─ hero.jpg          # beach hero (Unsplash)
+│       ├─ portfolio/        # 8 placeholder images (Unsplash)
+│       └─ icons/            # optional custom icons
+└─ README.md                 # quick start guide
