@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kent Schaeffer – Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- --------------------------------------------------------------
+         FONT – switched from Google Fonts to Bunny Fonts (same family)
+         -------------------------------------------------------------- -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=merriweather:400,700&amp;display=swap"
+          rel="stylesheet" type="text/css">
+
+    <style>
+        /* Apply the imported Merriweather font (fallback stack kept) */
+        body {
+            font-family: Merriweather, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", Roboto, "Helvetica Neue", Arial,
+                         "Noto Sans", sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+    </style>
+
+    <!-- Font Awesome (unchanged) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ==== Fixed Header ==== -->
+<header id="site-header">
+    <nav class="container">
+        <a href="#" class="logo">Kent&nbsp;Schaeffer</a>
+        <ul class="nav-links">
+            <li><a href="#cover">Home</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#timeline">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- ==== Cover Section ==== -->
+<section id="cover" class="section hero">
+    <div class="overlay"></div>
+    <div class="hero-content container">
+        <h1>Kent Schaeffer</h1>
+        <p class="tagline">Technical Leader • Engineer • Educator</p>
+        <a href="#portfolio" class="btn primary scroll">View My Work</a>
+    </div>
+</section>
+
+<!-- ==== Portfolio ==== -->
+<section id="portfolio" class="section">
+    <div class="container">
+        <h2 class="section-title">Portfolio</h2>
+
+        <div class="donut-grid">
+            <div class="card" data-modal="modal-websites">
+                <img src="assets/img/portfolio/websites.jpg" alt="Websites">
+                <h3>Websites</h3>
+            </div>
+            <div class="card" data-modal="modal-docs">
+                <img src="assets/img/portfolio/docs.jpg" alt="Technical Docs">
+                <h3>Technical Docs</h3>
+            </div>
+            <div class="card" data-modal="modal-hosting">
+                <img src="assets/img/portfolio/hosting.jpg" alt="Hosting">
+                <h3>Hosting</h3>
+            </div>
+            <div class="card" data-modal="modal-diagrams">
+                <img src="assets/img/portfolio/diagrams.jpg" alt="Network Diagrams">
+                <h3>Network Diagrams</h3>
+            </div>
+            <div class="card" data-modal="modal-scripting">
+                <img src="assets/img/portfolio/scripting.jpg" alt="Linux Scripting">
+                <h3>Linux Scripting</h3>
+            </div>
+            <div class="card" data-modal="modal-admin">
+                <img src="assets/img/portfolio/admin.jpg" alt="Administration">
+                <h3>Administration</h3>
+            </div>
+            <div class="card" data-modal="modal-dev">
+                <img src="assets/img/portfolio/dev.jpg" alt="App Development">
+                <h3>Application Development</h3>
+            </div>
+            <div class="card" data-modal="modal-ddi">
+                <img src="assets/img/portfolio/ddi.jpg" alt="DDI Consulting">
+                <h3>DDI Consulting</h3>
+            </div>
+        </div>
+
+        <!-- ==== Modals (example for Websites – duplicate for others) ==== -->
+        <div class="modal" id="modal-websites">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Websites</h3>
+                <p>Responsive, SEO‑friendly sites built for clients and personal projects.</p>
+                <img src="assets/img/portfolio/websites-large.jpg" alt="Websites sample">
+            </div>
+        </div>
+        <!-- … repeat similar modal blocks for the other seven categories … -->
+    </div>
+</section>
+
+<!-- ==== Education ==== -->
+<section id="education" class="section">
+    <div class="container">
+        <h2 class="section-title">Education & Certifications</h2>
+
+        <div class="edu-list">
+            <div class="edu-item">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52"
+                         fill="#9e1b34" class="bi bi-bookmark-star-fill"
+                         viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zM8.16 4.1a.178.178 0 0 0-.32 0l-.634 1.285a.178.178 0 0 1-.134.098l-1.42.206a.178.178 0 0 0-.098.303L6.58 6.993c.042.041.061.1.051.158L6.39 8.565a.178.178 0 0 0 .258.187l1.27-.668a.178.178 0 0 1 .165 0l1.27.668a.178.178 0 0 0 .257-.187L9.368 7.15a.178.178 0 0 1 .05-.158l1.028-1.001a.178.178 0 0 0-.098-.303l-1.42-.206a.178.178 0 0 1-.134-.098L8.16 4.1z"/>
+                    </svg>
+                </div>
+                <div class="details">
+                    <h4>B.Sc. – Computer Science &amp; Information Systems</h4>
+                    <p>Brigham Young University‑Hawaii, 1996</p>
+                </div>
+            </div>
+
+            <!-- Add additional degree / certification items here, each using the same SVG -->
+        </div>
+    </div>
+</section>
+
+<!-- ==== Professional Timeline ==== -->
+<section id="timeline" class="section">
+    <div class="container">
+        <h2 class="section-title">Professional Experience</h2>
+
+        <div class="timeline">
+            <div class="tl-card left">
+                <img src="assets/img/timeline/wellsfargo.jpg" alt="Wells Fargo">
+                <div class="tl-content">
+                    <h3>Wells Fargo – Information Security Engineer</h3>
+                    <p>2018‑2020 – Led cyber‑threat management, authored technical docs, co‑architected Anomaly Behavior Project.</p>
+                    <a href="https://www.wellsfargo.com" target="_blank" class="btn secondary">Visit Employer</a>
+                </div>
+            </div>
+
+            <div class="tl-card right">
+                <img src="assets/img/timeline/fidelity.jpg" alt="Fidelity">
+                <div class="tl-content">
+                    <h3>Eliassen Group @ Fidelity – Contract Principal Systems Analyst</h3>
+                    <p>Jun‑Sep 2023 – Designed integration guides for Camunda BPM migration, produced detailed documentation.</p>
+                    <a href="https://www.fidelity.com" target="_blank" class="btn secondary">Visit Employer</a>
+                </div>
+            </div>
+
+            <!-- Continue adding alternating cards for the rest of the résumé (focus on DDI, web dev, technical writing) -->
+        </div>
+    </div>
+</section>
+
+<!-- ==== Contact Form ==== -->
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+
+        <form id="contact-form" method="POST"
+              action="https://api.web3forms.com/submit">
+            <!-- Replace YOUR_ACCESS_KEY with a real Web3Forms key -->
+            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+            <input type="hidden" name="subject" value="New portfolio inquiry">
+            <input type="hidden" name="from_name" value="Kent Schaeffer">
+            <input type="hidden" name="reply_to" value="kent@kentknowsme.com">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn primary">Send Message</button>
+            <p id="form-status" class="status"></p>
+        </form>
+    </div>
+</section>
+
+<!-- ==== Footer ==== -->
+<footer>
+    <div class="container footer-flex">
+        <div class="social">
+            <a href="https://linkedin.com/in/kentmschaeffer" target="_blank"><i class="fa fa-linkedin"></i></a>
+            <a href="https://github.com/kentknowsme" target="_blank"><i class="fa fa-github"></i></a>
+        </div>
+
+        <p>© 2025 Kent Schaeffer – <a href="https://kentknowsme.com" target="_blank">kentknowsme.com</a></p>
+
+        <p class="attr">Images from <a href="https://unsplash.com" target="_blank">Unsplash</a></p>
+    </div>
+</footer>
+
+<!-- Site JS -->
+<script src="assets/js/script.js"></script>
+</body>
+</html>
