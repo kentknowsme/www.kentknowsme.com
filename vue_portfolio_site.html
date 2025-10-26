@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kent Schaeffer - Technical Writer and Web Developer</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=merriweather:400,700&amp;display=swap"
+          rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-color: #f4623a;
+            --dark-grey: #2a2a2a;
+            --text-white: #ffffff;
+            --cert-burgundy: #9e1b34;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Merriweather, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            color: var(--text-white);
+            background-color: var(--dark-grey);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            padding: 1rem 0;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(42, 42, 42, 0.95) !important;
+        }
+        
+        .navbar-brand {
+            color: var(--text-white) !important;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-link {
+            color: var(--text-white) !important;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-white);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #d94d2a;
+            border-color: #d94d2a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(244, 98, 58, 0.3);
+        }
+        
+        section {
+            min-height: 100vh;
+            padding: 6rem 0 4rem;
+            position: relative;
+        }
+        
+        #cover {
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        #cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        #cover .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        #cover h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        #cover p {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .portfolio-circle {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            margin: 0 auto;
+        }
+        
+        .portfolio-item {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        .portfolio-item.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .portfolio-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .portfolio-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .portfolio-item p {
+            font-size: 0.75rem;
+            margin: 0;
+        }
+        
+        .modal-content {
+            background-color: var(--dark-grey);
+            color: var(--text-white);
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 45%;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-card {
+            margin-left: auto;
+        }
+        
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            border: 3px solid var(--dark-grey);
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-card::before {
+            left: -63px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-card::before {
+            right: -63px;
+        }
+        
+        .education-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+        
+        .education-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .education-item .cert-icon {
+            flex-shrink: 0;
+        }
+        
+        .education-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .education-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .education-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-form .form-control,
+        .contact-form .form-control:focus {
+            background: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #333;
+        }
+        
+        .contact-form .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(244, 98, 58, 0.25);
+        }
+        
+        .contact-form .form-control::placeholder {
+            color: #666;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+        
+        .social-links a {
+            color: var(--text-white);
+            font-size: 2rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 992px) {
+            .portfolio-circle {
+                width: 100%;
+                height: auto;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .portfolio-item {
+                position: static !important;
+                width: 100%;
+                height: auto;
+                min-height: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #cover h1 {
+                font-size: 2.5rem;
+            }
+            
+            #cover p {
+                font-size: 1.5rem;
+            }
+            
+            .portfolio-circle {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 0;
+            }
+            
+            .timeline-card {
+                width: 100%;
+                margin-left: 2rem !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-card::before,
+            .timeline-item:nth-child(even) .timeline-card::before {
+                left: -40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg" :class="{ scrolled: isScrolled }">
+            <div class="container">
+                <a class="navbar-brand" href="#cover">Kent Schaeffer</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section id="cover">
+            <div class="content">
+                <h1>Technical Writer and Web Developer</h1>
+                <p>Specializing in DDI Technologies, Linux Systems, and Web Solutions</p>
+                <button class="btn btn-primary" @click="scrollToSection('portfolio')">
+                    View My Work <i class="fa fa-arrow-down ms-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <div class="container">
+                <h2 class="section-title">Portfolio & Examples</h2>
+                <div class="portfolio-circle">
+                    <div class="portfolio-item" 
+                         v-for="(item, index) in portfolioItems" 
+                         :key="item.id"
+                         :style="getCirclePosition(index, portfolioItems.length)"
+                         :class="{ visible: item.visible }"
+                         @click="openGallery(item)">
+                        <h4>{{ item.title }}</h4>
+                        <p>{{ item.description }}</p>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-primary" @click="scrollToSection('education')">
+                        Education <i class="fa fa-arrow-down ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <div class="container">
+                <h2 class="section-title">Education & Certifications</h2>
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="education-item" v-for="(item, index) in educationItems" :key="index">
+                            <div class="cert-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="#9e1b34" class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zM8.16 4.1a.178.178 0 0 0-.32 0l-.634 1.285a.178.178 0 0 1-.134.098l-1.42.206a.178.178 0 0 0-.098.303L6.58 6.993c.042.041.061.1.051.158L6.39 8.565a.178.178 0 0 0 .258.187l1.27-.668a.178.178 0 0 1 .165 0l1.27.668a.178.178 0 0 0 .257-.187L9.368 7.15a.178.178 0 0 1 .05-.158l1.028-1.001a.178.178 0 0 0-.098-.303l-1.42-.206a.178.178 0 0 1-.134-.098L8.16 4.1z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>{{ item.title }}</h4>
+                                <p class="mb-1" v-if="item.institution">
+                                    <a :href="item.link" target="_blank">{{ item.institution }}</a>
+                                </p>
+                                <p class="text-muted" v-if="item.year">{{ item.year }}</p>
+                                <p v-if="item.details">{{ item.details }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-primary" @click="scrollToSection('projects')">
+                        Projects <i class="fa fa-arrow-down ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2 class="section-title">Project Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item" v-for="(project, index) in projects" :key="index">
+                        <div class="timeline-card">
+                            <h4 style="color: var(--primary-color)">{{ project.title }}</h4>
+                            <p class="mb-2"><strong>{{ project.role }}</strong></p>
+                            <p class="mb-2" v-if="project.company">
+                                <a :href="project.link" target="_blank" style="color: var(--primary-color)">{{ project.company }}</a>
+                            </p>
+                            <p class="text-muted mb-2" v-if="project.dates">{{ project.dates }}</p>
+                            <p>{{ project.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-primary" @click="scrollToSection('contact')">
+                        Contact <i class="fa fa-arrow-down ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="row">
+                    <div class="col-lg-6 mx-auto">
+                        <form class="contact-form fade-in" @submit.prevent="submitForm">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" v-model="form.name" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" v-model="form.email" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" v-model="form.subject" placeholder="Subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" v-model="form.message" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">
+                                    <span v-if="!submitting">Send Message</span>
+                                    <span v-else>Sending...</span>
+                                </button>
+                            </div>
+                            <div v-if="submitMessage" class="alert mt-3" :class="submitSuccess ? 'alert-success' : 'alert-danger'">
+                                {{ submitMessage }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="social-links mb-4">
+                    <a href="https://linkedin.com/in/kentmschaeffer" target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://kentknowsme.com" target="_blank"><i class="fa fa-globe"></i></a>
+                    <a href="https://docs.kentknowsme.com" target="_blank"><i class="fa fa-file-text"></i></a>
+                    <a href="https://github.com/kentknowsme" target="_blank"><i class="fa fa-github"></i></a>
+                </div>
+                <p>Photos by <a href="https://unsplash.com" target="_blank" style="color: var(--primary-color)">Unsplash</a></p>
+                <p>&copy; {{ currentYear }} <a href="https://kentknowsme.com" target="_blank" style="color: var(--primary-color)">Kent Schaeffer</a>. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <div class="modal fade" id="galleryModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ currentGallery.title }}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ currentGallery.details }}</p>
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-3" v-for="(img, index) in currentGallery.images" :key="index">
+                                <img :src="img" class="gallery-img" alt="Gallery image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    isScrolled: false,
+                    currentYear: new Date().getFullYear(),
+                    submitting: false,
+                    submitMessage: '',
+                    submitSuccess: false,
+                    form: {
+                        name: '',
+                        email: '',
+                        subject: '',
+                        message: ''
+                    },
+                    portfolioItems: [
+                        {
+                            id: 1,
+                            title: 'DDI Consulting',
+                            description: 'DNS, DHCP, IPAM expertise with Infoblox, BIND, and QIP',
+                            details: 'Over 20 years of experience in DDI infrastructure including DNS BIND configuration, Infoblox DDI platforms, QIP environments, DNSSEC implementation, and enterprise-scale IPAM management.',
+                            images: [
+                                'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800',
+                                'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 2,
+                            title: 'Basic Websites',
+                            description: 'Responsive, modern websites with HTML5, CSS3, JavaScript',
+                            details: 'Professional website development using modern web technologies including Vue.js, Bootstrap, and responsive design principles. Focus on accessibility, performance, and user experience.',
+                            images: [
+                                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+                                'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 3,
+                            title: 'Technical Documentation',
+                            description: 'Comprehensive technical docs and user guides',
+                            details: 'Expert technical writing for system administrators, developers, and end users. View examples at docs.kentknows.com',
+                            link: 'https://docs.kentknows.com',
+                            images: [
+                                'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800',
+                                'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 4,
+                            title: 'Website Hosting',
+                            description: 'GitHub Pages, Cloudflare, CI/CD pipelines',
+                            details: 'Experience with modern deployment workflows including GitHub Actions, Cloudflare Workers, and automated testing pipelines.',
+                            images: [
+                                'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800',
+                                'https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 5,
+                            title: 'Network Diagrams',
+                            description: 'DNS topology, DHCP scopes, network architecture',
+                            details: 'Professional network documentation including DNS zone hierarchies, DHCP scope designs, IPAM planning, and infrastructure diagrams using Visio and OmniGraffle.',
+                            images: [
+                                'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800',
+                                'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 6,
+                            title: 'Linux Scripting',
+                            description: 'Bash, shell, korn, zsh, and Perl automation',
+                            details: 'Extensive experience automating system administration tasks, DNS updates, log parsing, and infrastructure management across RHEL, CentOS, and Unix environments.',
+                            images: [
+                                'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800',
+                                'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 7,
+                            title: 'Linux/Unix Admin',
+                            description: 'System configuration, DNS BIND, monitoring',
+                            details: 'Over 20 years managing Linux/Unix infrastructure including DNS BIND configuration, zone file management, Infoblox DDI platforms, and system automation.',
+                            images: [
+                                'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800',
+                                'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800'
+                            ],
+                            visible: false
+                        },
+                        {
+                            id: 8,
+                            title: 'Application Development',
+                            description: 'JavaScript and Perl backend services',
+                            details: 'Full-stack development using Node.js, Perl, RESTful APIs, and database integration for web applications and automation tools.',
+                            images: [
+                                'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800',
+                                'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800'
+                            ],
+                            visible: false
+                        }
+                    ],
+                    educationItems: [
+                        {
+                            title: 'Bachelor of Science - Computer Science and Information Systems',
+                            institution: 'Brigham Young University-Hawaii',
+                            link: 'https://www.byuh.edu',
+                            year: '1996',
+                            details: 'Minor: Business Management'
+                        },
+                        {
+                            title: 'Computer Graphics Certificate Program',
+                            institution: 'Collins College',
+                            link: 'https://www.collinscollege.edu',
+                            year: '2002'
+                        },
+                        {
+                            title: 'CompTIA A+ Core 1',
+                            institution: 'CompTIA',
+                            link: 'https://www.comptia.org',
+                            year: 'October 2025',
+                            details: 'Currently studying for Core 2 exam'
+                        },
+                        {
+                            title: 'JavaScript Algorithms and Data Structures',
+                            institution: 'freeCodeCamp',
+                            link: 'https://www.freecodecamp.org',
+                            year: '2024 & 2022'
+                        },
+                        {
+                            title: 'Adult and Pediatric First Aid/CPR/AED',
+                            institution: 'American Red Cross',
+                            link: 'https://www.redcross.org',
+                            year: '2024'
+                        },
+                        {
+                            title: 'Youth Mental Health First Aid',
+                            institution: 'Mental Health First Aid Team',
+                            link: 'https://www.mentalhealthfirstaid.org',
+                            year: '2023'
+                        },
+                        {
+                            title: 'Responsive Web Design',
+                            institution: 'freeCodeCamp',
+                            link: 'https://www.freecodecamp.org',
+                            year: '2021'
+                        },
+                        {
+                            title: 'AWS Certified Cloud Practitioner',
+                            institution: 'Amazon Web Services',
+                            link: 'https://aws.amazon.com',
+                            year: '2021'
+                        },
+                        {
+                            title: 'Scrum Fundamentals Certified',
+                            institution: 'ScrumStudy.com',
+                            link: 'https://www.scrumstudy.com',
+                            year: '2020'
+                        },
+                        {
+                            title: 'IPv6 Explorer Certification',
+                            institution: 'Hurricane Electric',
+                            link: 'https://he.net',
+                            year: '2016'
+                        },
+                        {
+                            title: 'Network+ Certification',
+                            institution: 'CompTIA',
+                            link: 'https://www.comptia.org',
+                            year: '2005'
+                        },
+                        {
+                            title: 'Certified NetWare Administrator (3.x)',
+                            institution: 'Novell',
+                            link: 'https://www.novell.com',
+                            year: '1994'
+                        }
+                    ],
+                    projects: [
+                        {
+                            title: 'IT Service Desk Support',
+                            role: 'IT Service Desk Technician I',
+                            company: 'Western Governors University',
+                            link: 'https://www.wgu.edu',
+                            dates: 'Jul 2025 - Sep 2025',
+                            description: 'Delivered exceptional customer service and technical support to students. Addressed technical issues efficiently while maintaining high satisfaction levels and collaborated with team members to enhance support processes.'
+                        },
+                        {
+                            title: 'Digital Literacy Education',
+                            role: 'Digital Literacy Instructor',
+                            company: 'English Skills Learning Center',
+                            link: 'https://www.eslcenter.org',
+                            dates: 'Jan 2024 - Sep 2024',
+                            description: 'Designed and delivered comprehensive Digital Literacy curriculum for adult Emergent Reader learners. Taught over 120 students daily and planned, installed, configured, and maintained first computer lab with over 30 laptops.'
+                        },
+                        {
+                            title: 'BPM Platform Integration',
+                            role: 'Contract Principal Systems Analyst',
+                            company: 'Fidelity Investments (via Eliassen Group)',
+                            link: 'https://www.fidelity.com',
+                            dates: 'Jun 2023 - Sep 2023',
+                            description: 'Led the design and implementation of integration guides for business units migrating to a new Camunda-based BPM platform. Streamlined processes and developed comprehensive documentation.'
+                        },
+                        {
+                            title: 'Network Security Automation',
+                            role: 'Contract Senior Automation Engineer',
+                            company: 'Consolidated Edison (via Randstad)',
+                            link: 'https://www.coned.com',
+                            dates: 'Dec 2022 - Mar 2023',
+                            description: 'Enhanced network device monitoring and management by revamping dashboards and UI services. Automated configuration changes during potential security breaches using PowerShell, HTML, XML, and BMC Network Automation.'
+                        },
+                        {
+                            title: 'Data Automation & Cloud Infrastructure',
+                            role: 'Senior Software Engineer',
+                            company: 'Five9 Inc',
+                            link: 'https://www.five9.com',
+                            dates: 'Jan 2022 - Sep 2022',
+                            description: 'Engineered custom code that automated data feeds and reporting processes. Configured, deployed, documented, and maintained VM servers in hybrid cloud environment using Google Cloud, CentOS, PostgreSQL, Apache, and MySQL.'
+                        },
+                        {
+                            title: 'Global DDI Team Leadership',
+                            role: 'DDI Infrastructure Engineer',
+                            company: 'Goldman Sachs',
+                            link: 'https://www.goldmansachs.com',
+                            dates: 'Jun 2021 - Dec 2021',
+                            description: 'Accelerated career growth from Analyst to Vice President by leading the build-out of a global DDI team. Modernized infrastructure processes and spearheaded implementation of best practices for DNS, DHCP, and IPAM.'
+                        },
+                        {
+                            title: 'Information Security Engineering',
+                            role: 'Information Security Engineer',
+                            company: 'Wells Fargo Bank',
+                            link: 'https://www.wellsfargo.com',
+                            dates: 'Mar 2018 - Dec 2020',
+                            description: 'Standardized system processes and configurations for Cyber Threat Management Group. Co-architected technical configuration for Anomaly Behavior Project integrating MySQL, PostgreSQL, Cloudera Data Platform, and Trifacta.'
+                        },
+                        {
+                            title: 'DDI Automation & Technical Leadership',
+                            role: 'DDI Automation Engineer and Technical Team Lead',
+                            company: 'Wells Fargo Bank',
+                            link: 'https://www.wellsfargo.com',
+                            dates: 'Jul 2015 - Mar 2018',
+                            description: 'Promoted to Technical Team Lead based on dedication to ingenuity and automation. Developed automation tools using Perl, HTML, bash/korn shell, and Infoblox IPAM. Saved enterprise email record migration project time and funds by deploying over 9,000 record changes.'
+                        },
+                        {
+                            title: 'Enterprise DDI Infrastructure',
+                            role: 'DDI Automation and Network Engineer',
+                            company: 'Wells Fargo Bank',
+                            link: 'https://www.wellsfargo.com',
+                            dates: 'Aug 2008 - Jul 2015',
+                            description: 'Provided comprehensive engineering support for enterprise DDI infrastructure. Pioneered documentation processes during Wells Fargo and Wachovia merger by developing first set of combined process documentation and network diagrams.'
+                        },
+                        {
+                            title: 'E-Business Infrastructure',
+                            role: 'Senior Internet System Specialist',
+                            company: 'Avnet',
+                            link: 'https://www.avnet.com',
+                            dates: 'Jan 2000 - May 2002',
+                            description: 'Co-architected internal inventory & lookup web tool used division-wide. Installed, secured, and managed 500+ Windows NT/2000 Servers, F5 BigIP load balancers in enterprise DMZ environment. Maintained DNS BIND and administered company-wide DNS zones.'
+                        },
+                        {
+                            title: 'IT Hotel Operations Management',
+                            role: 'IT Manager',
+                            company: 'Starwood Hotels - St Regis and Century Plaza',
+                            link: 'https://www.marriott.com',
+                            dates: 'May 2003 - Jul 2004',
+                            description: 'Managed Server/Client, internet, telecomm and Retail POS technologies on 24x7x365 basis for large convention and luxury hotel. Maintained infrastructure supporting over 300 staff, 1100 guest rooms, multiple restaurants, and 100k sq ft convention space.'
+                        }
+                    ],
+                    currentGallery: {
+                        title: '',
+                        details: '',
+                        images: []
+                    }
+                };
+            },
+            mounted() {
+                window.addEventListener('scroll', this.handleScroll);
+                this.observeElements();
+                setTimeout(() => {
+                    this.animatePortfolioItems();
+                }, 300);
+            },
+            beforeUnmount() {
+                window.removeEventListener('scroll', this.handleScroll);
+            },
+            methods: {
+                handleScroll() {
+                    this.isScrolled = window.scrollY > 50;
+                },
+                scrollToSection(sectionId) {
+                    const element = document.getElementById(sectionId);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                },
+                getCirclePosition(index, total) {
+                    if (window.innerWidth <= 992) {
+                        return {};
+                    }
+                    const angle = (index * 360 / total) * Math.PI / 180;
+                    const radius = 300;
+                    const centerX = 400;
+                    const centerY = 400;
+                    const x = centerX + radius * Math.cos(angle) - 100;
+                    const y = centerY + radius * Math.sin(angle) - 100;
+                    return {
+                        left: x + 'px',
+                        top: y + 'px'
+                    };
+                },
+                animatePortfolioItems() {
+                    this.portfolioItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.visible = true;
+                        }, index * 100);
+                    });
+                },
+                observeElements() {
+                    const options = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -100px 0px'
+                    };
+                    
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    }, options);
+                    
+                    setTimeout(() => {
+                        document.querySelectorAll('.timeline-item, .education-item, .fade-in').forEach(el => {
+                            observer.observe(el);
+                        });
+                    }, 100);
+                },
+                openGallery(item) {
+                    this.currentGallery = {
+                        title: item.title,
+                        details: item.details,
+                        images: item.images
+                    };
+                    const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+                    modal.show();
+                },
+                async submitForm() {
+                    this.submitting = true;
+                    this.submitMessage = '';
+                    
+                    try {
+                        const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                name: this.form.name,
+                                email: this.form.email,
+                                subject: this.form.subject,
+                                message: this.form.message,
+                                _replyto: this.form.email,
+                                _subject: `Portfolio Contact: ${this.form.subject}`
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            this.submitSuccess = true;
+                            this.submitMessage = 'Thank you for your message! I will get back to you soon.';
+                            this.form = { name: '', email: '', subject: '', message: '' };
+                        } else {
+                            this.submitSuccess = false;
+                            this.submitMessage = 'There was an error sending your message. Please try again.';
+                        }
+                    } catch (error) {
+                        this.submitSuccess = false;
+                        this.submitMessage = 'There was an error sending your message. Please try again.';
+                    } finally {
+                        this.submitting = false;
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
