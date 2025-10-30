@@ -1,2 +1,2 @@
-# www.kentknowsme.com
-portfolio for Kent Schaeffer
+# www-kentknowsme-com
+New Kent Knows Me portfolio site
